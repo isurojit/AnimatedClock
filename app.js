@@ -61,7 +61,7 @@ const clock = () => {
     (Math.PI / 6) * hr + (Math.PI / 360) * min + (Math.PI / 21600) * sec
   );
   ctx.strokeStyle = "#800000";
-  ctx.lineWidth = 14;
+  ctx.lineWidth = 12;
   ctx.beginPath();
   ctx.moveTo(-20, 0);
   ctx.lineTo(80, 0);
@@ -72,7 +72,7 @@ const clock = () => {
   ctx.save();
   ctx.rotate((Math.PI / 30) * min + (Math.PI / 1800) * sec);
   ctx.strokeStyle = "#800000";
-  ctx.lineWidth = 10;
+  ctx.lineWidth = 8;
   ctx.beginPath();
   ctx.moveTo(-28, 0);
   ctx.lineTo(112, 0);
@@ -95,6 +95,6 @@ const clock = () => {
   ctx.restore();
 
   ctx.restore(); //restore default state
+  requestAnimationFrame(clock);
 };
-
-clock();
+requestAnimationFrame(clock);
