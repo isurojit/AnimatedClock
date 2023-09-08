@@ -1,3 +1,17 @@
+const form = document.querySelector("form");
+
+let faceColor, borderColor, lineColor, largeHandColor, secondHandColor;
+const changeClockInterface = (e) => {
+  e.preventDefault();
+  faceColor = document.querySelector("#face-color").value;
+  borderColor = document.querySelector("#border-color").value;
+  lineColor = document.querySelector("#line-color").value;
+  largeHandColor = document.querySelector("#large-hand-color").value;
+  secondHandColor = document.querySelector("#second-hand-color").value;
+};
+
+form.addEventListener("submit", changeClockInterface);
+
 const clock = () => {
   const now = new Date();
   const canvas = document.getElementById("canvas");
@@ -9,17 +23,17 @@ const clock = () => {
   ctx.translate(250, 250); //Put 0,0 in the middle
   ctx.rotate(-Math.PI / 2); //rotate clock -90deg
 
-  //set default style
+  // Set default styles
   ctx.strokeStyle = "#000000";
   ctx.fillStyle = "#f4f4f4";
   ctx.lineWidth = 5;
   ctx.lineCap = "round";
-
   //Draw clock face/board
   ctx.save();
   ctx.beginPath();
   ctx.lineWidth = 14;
-  ctx.strokeStyle = "#800000";
+  ctx.strokeStyle = `${borderColor}`;
+  ctx.fillStyle = `${faceColor}`;
   ctx.arc(0, 0, 142, 0, Math.PI * 2, true);
   ctx.stroke();
   ctx.fill();
@@ -27,11 +41,13 @@ const clock = () => {
 
   // Draw hour lines
   ctx.save();
+  ctx.strokeStyle = `${lineColor}`;
   for (let i = 0; i < 12; i++) {
     ctx.beginPath();
     ctx.rotate(Math.PI / 6);
     ctx.moveTo(100, 0);
     ctx.lineTo(120, 0);
+    ctx.strokeStyle = `${lineColor}`;
     ctx.stroke();
   }
   ctx.restore();
@@ -39,6 +55,7 @@ const clock = () => {
   // Draw minute lines
   ctx.save();
   ctx.lineWidth = 4;
+  ctx.strokeStyle = `${lineColor}`;
   for (let i = 0; i < 60; i++) {
     if (i % 5 !== 0) {
       ctx.beginPath();
@@ -60,7 +77,7 @@ const clock = () => {
   ctx.rotate(
     (Math.PI / 6) * hr + (Math.PI / 360) * min + (Math.PI / 21600) * sec
   );
-  ctx.strokeStyle = "#800000";
+  ctx.strokeStyle = `${largeHandColor}`;
   ctx.lineWidth = 12;
   ctx.beginPath();
   ctx.moveTo(-20, 0);
@@ -71,7 +88,7 @@ const clock = () => {
   // Draw min hand
   ctx.save();
   ctx.rotate((Math.PI / 30) * min + (Math.PI / 1800) * sec);
-  ctx.strokeStyle = "#800000";
+  ctx.strokeStyle = `${largeHandColor}`;
   ctx.lineWidth = 8;
   ctx.beginPath();
   ctx.moveTo(-28, 0);
@@ -82,8 +99,8 @@ const clock = () => {
   // Draw sec hand
   ctx.save();
   ctx.rotate((sec * Math.PI) / 30);
-  ctx.strokeStyle = "#FF7F50";
-  ctx.fillStyle = "#FF7F50";
+  ctx.strokeStyle = `${secondHandColor}`;
+  ctx.fillStyle = `${secondHandColor}`;
   ctx.lineWidth = 6;
   ctx.beginPath();
   ctx.moveTo(-30, 0);
